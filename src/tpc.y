@@ -37,7 +37,7 @@ Prog:  DeclVars DeclFoncts{
     $$ = makeNode(programme);
     Node* var = makeNode(variables);
     Node* foncts = makeNode(fonctions);
-    /*on ajoute la declaration de variable et de fonctions à Prog*/
+    /* on ajoute la declaration des variables et des fonctions à Prog */
     addChild($$, var);
     addChild($$, foncts);
 

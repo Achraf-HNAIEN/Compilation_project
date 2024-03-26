@@ -1,26 +1,39 @@
 #ifndef SYMBOLE_H
 #define SYMBOLE_H
 
-typedef enum classe{
-    GLOBALE,
-    LOCALE,
-    PARAMETRE,
-    FONCTION
-}Classe;
+typedef enum Classe { GLOBALE, LOCALE, PARAMETRE, FONCTION };
+typedef enum Entry { INT, CHAR };
 
-typedef struct symbole
-{   
-    char* identifant;
-    int value;
-    long int address;
-    int tabSize; // met a 0 si pas un tableau sinon la taille du tableau tab[0]
-    Classe classe;
-    Symbole* next;
-}Symbole;
+typedef struct entry {
+  Entry entryType;
+  char identifiant[1024];
+  long int address;
+} ENTRY;
 
+typedef struct symbole {
+  char* identifiant;
+  int value;
+  long int address;
+  Classe classe;
+} Symbole;
 
 int intialisSymboleTable();
-void addSymbole(char* identifant, int value, long int address, int tabSize, Classe classe);
+void addSymbole(char* identifant,
+                int value,
+                long int address,
+                int tabSize,
+                Classe classe);
 void estPresent(char* identifant);
 
-#endif // SYMBOLE_H
+void add_function();
+void free_function();
+void add_var();
+void free_var();
+void add_param();
+void free_param();
+void add_tab();
+void free_tab();
+void add_global();
+void free_global();
+
+#endif  // SYMBOLE_H
