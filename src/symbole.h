@@ -9,6 +9,7 @@ typedef enum {
     SYM_FUNCTION,
     SYM_PARAMETER
 } SymbolType;
+
 typedef enum {
     TYPE_INT,
     TYPE_CHAR
