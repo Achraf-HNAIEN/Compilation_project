@@ -1,39 +1,40 @@
-#ifndef SYMBOLE_H
-#define SYMBOLE_H
+#ifndef SYMBOL_H
+#define SYMBOL_H
 
-typedef enum Classe { GLOBALE, LOCALE, PARAMETRE, FONCTION };
-typedef enum Entry { INT, CHAR };
+#include <stdbool.h>
 
-typedef struct entry {
-  Entry entryType;
-  char identifiant[1024];
-  long int address;
-} ENTRY;
+// Définition des types de symboles
+typedef enum {
+    VARIABLE,
+    FUNCTION,
+    PARAMETER
+} SymbolType;
 
-typedef struct symbole {
-  char* identifiant;
-  int value;
-  long int address;
-  Classe classe;
-} Symbole;
+typedef enum {
+    INT,
+    CHAR
+} DataType;
 
-int intialisSymboleTable();
-void addSymbole(char* identifant,
-                int value,
-                long int address,
-                int tabSize,
-                Classe classe);
-void estPresent(char* identifant);
+typedef struct Symbol {
+    char* name;               // Nom
+    int address;              // Adresse mémoire
+    SymbolType type;          // Type de symbole (variable, fonction, paramètre)
+    DataType dataType;             // Type de donnée (int, char)
+    //bool isGlobal;            // Indique si le symbole est global 0 si oui le reste non
+    int scopeLevel;           // Niveau de portée du symbole
+    int lineNumber;           // Ligne dans le code source
+    struct Symbol* next;    
+} Symbol;
 
-void add_function();
-void free_function();
-void add_var();
-void free_var();
-void add_param();
-void free_param();
-void add_tab();
-void free_tab();
-void add_global();
-void free_global();
 
-#endif  // SYMBOLE_H
+typedef struct {
+    Symbol* head;             // Pointeur vers le premier symbole de la liste
+    int size;                 // Nombre de symboles dans la table
+} SymbolTable;
+
+void initSymbolTable(SymbolTable* table);
+Symbol* addSymbol(SymbolTable* table, const char* name, SymbolType type, int dataType, bool isGlobal, int lineNumber);
+Symbol* findSymbol(SymbolTable* table, const char* name);
+void deleteSymbolTable(SymbolTable* table);
+
+#endif
