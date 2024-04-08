@@ -36,5 +36,7 @@ Symbol* addSymbol(SymbolTable* table,
                   int lineNumber);
 Symbol* findSymbol(SymbolTable* table, const char* name);
 void deleteSymbolTable(SymbolTable* table);
+Symbol* checkAndAddSymbol(SymbolTable* table, const char* name, SymbolType type, DataType dataType, int lineNumber);
+void fillGlobalSymbolTable(SymbolTable* table, Node* ast);
 
 #endif
