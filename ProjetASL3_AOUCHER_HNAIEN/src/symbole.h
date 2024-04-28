@@ -4,7 +4,7 @@
 #include <stdbool.h>
 
 typedef enum { VARIABLE, FUNCTION, PARAMETER, GLOBAL_VARIABLE } SymbolType;
-typedef enum { INT, CHAR, VOID } DataType;
+typedef enum { INT, CHAR} DataType;
 
 typedef struct Symbol {
   char* name;

@@ -74,13 +74,13 @@
 #include <stdlib.h>
 
 extern int lineno, colno;
-extern void yyerror(const char *msg);
-extern int yyparse(void);
+
 extern int yylex();
 void yyerror(const char *msg); 
 #include "tree.h"
 
 Node *tree;
+#include "main.c"
 
 #line 86 "src/tpc.tab.c"
 
@@ -547,13 +547,13 @@ static const yytype_int8 yytranslate[] =
 /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_int16 yyrline[] =
 {
-       0,    37,    37,    51,    65,    68,    75,    85,    91,    97,
-     103,   110,   123,   139,   142,   143,   146,   164,   181,   195,
-     209,   222,   230,   233,   240,   245,   261,   271,   284,   295,
-     305,   309,   310,   314,   316,   321,   323,   328,   330,   336,
-     338,   344,   346,   352,   354,   360,   362,   367,   372,   373,
-     377,   381,   382,   396,   400,   410,   416,   429,   430,   433,
-     437
+       0,    39,    39,    53,    67,    70,    77,    87,    93,    99,
+     105,   112,   125,   141,   144,   145,   148,   166,   183,   197,
+     211,   224,   232,   235,   242,   247,   263,   273,   286,   297,
+     307,   311,   312,   316,   318,   323,   325,   330,   332,   338,
+     340,   346,   348,   354,   356,   362,   364,   369,   374,   375,
+     379,   383,   384,   398,   402,   412,   418,   431,   432,   435,
+     439
 };
 #endif
 
@@ -1195,7 +1195,7 @@ yyreduce:
   switch (yyn)
     {
   case 2: /* Prog: DeclVars DeclFoncts  */
-#line 37 "src/tpc.y"
+#line 39 "src/tpc.y"
                           {
     (yyval.node) = makeNode(programme);
     Node* var = makeNode(variables);
@@ -1212,7 +1212,7 @@ yyreduce:
     break;
 
   case 3: /* DeclVars: DeclVars TYPE Declarateurs ';'  */
-#line 51 "src/tpc.y"
+#line 53 "src/tpc.y"
                                   {
         Node* declarationVar = makeNode(VariableDeclaration);
         Node* typeVar = makeNode(type);
@@ -1231,13 +1231,13 @@ yyreduce:
     break;
 
   case 4: /* DeclVars: %empty  */
-#line 65 "src/tpc.y"
+#line 67 "src/tpc.y"
       {(yyval.node) = NULL;}
 #line 1237 "src/tpc.tab.c"
     break;
 
   case 5: /* Declarateurs: Declarateurs ',' IDENT  */
-#line 68 "src/tpc.y"
+#line 70 "src/tpc.y"
                               {
         (yyval.node) = (yyvsp[-2].node);
         Node* identificateur = makeNode(NameVar);
@@ -1249,7 +1249,7 @@ yyreduce:
     break;
 
   case 6: /* Declarateurs: IDENT '[' NUM ']'  */
-#line 75 "src/tpc.y"
+#line 77 "src/tpc.y"
                          {
         (yyval.node) = makeNode(NameVar);
         strcpy((yyval.node)->ident, (yyvsp[-3].ident));
@@ -1264,7 +1264,7 @@ yyreduce:
     break;
 
   case 7: /* Declarateurs: IDENT  */
-#line 85 "src/tpc.y"
+#line 87 "src/tpc.y"
              {
         (yyval.node) = makeNode(NameVar);
         strcpy((yyval.node)->ident, (yyvsp[0].ident));
@@ -1273,7 +1273,7 @@ yyreduce:
     break;
 
   case 8: /* DeclFoncts: DeclFoncts DeclFonct  */
-#line 91 "src/tpc.y"
+#line 93 "src/tpc.y"
                         {
       (yyval.node) = (yyvsp[-1].node);
       Node* declarationFoncts = makeNode(fonction);
@@ -1284,7 +1284,7 @@ yyreduce:
     break;
 
   case 9: /* DeclFoncts: DeclFonct  */
-#line 97 "src/tpc.y"
+#line 99 "src/tpc.y"
                {
       (yyval.node) = makeNode(fonction);
       addChild((yyval.node), (yyvsp[0].node));
@@ -1293,7 +1293,7 @@ yyreduce:
     break;
 
   case 10: /* DeclFonct: EnTeteFonct Corps  */
-#line 103 "src/tpc.y"
+#line 105 "src/tpc.y"
                      {
       (yyval.node) = makeNode(enTete);
       addChild((yyval.node), (yyvsp[-1].node));
@@ -1303,7 +1303,7 @@ yyreduce:
     break;
 
   case 11: /* EnTeteFonct: TYPE IDENT '(' Parametres ')'  */
-#line 110 "src/tpc.y"
+#line 112 "src/tpc.y"
                                   {
         (yyval.node) = makeNode(returnType);
         strcpy((yyval.node)->type, (yyvsp[-4].type));
@@ -1321,7 +1321,7 @@ yyreduce:
     break;
 
   case 12: /* EnTeteFonct: VOID IDENT '(' Parametres ')'  */
-#line 123 "src/tpc.y"
+#line 125 "src/tpc.y"
                                     {
         (yyval.node) = makeNode(returnType);
         strcpy((yyval.node)->type, "void");
@@ -1339,7 +1339,7 @@ yyreduce:
     break;
 
   case 13: /* Parametres: VOID  */
-#line 139 "src/tpc.y"
+#line 141 "src/tpc.y"
             { 
         (yyval.node) = NULL;
         }
@@ -1347,19 +1347,19 @@ yyreduce:
     break;
 
   case 14: /* Parametres: ListTypVar  */
-#line 142 "src/tpc.y"
+#line 144 "src/tpc.y"
                   { (yyval.node) = (yyvsp[0].node); }
 #line 1353 "src/tpc.tab.c"
     break;
 
   case 15: /* Parametres: %empty  */
-#line 143 "src/tpc.y"
+#line 145 "src/tpc.y"
       { (yyval.node) = NULL; }
 #line 1359 "src/tpc.tab.c"
     break;
 
   case 16: /* ListTypVar: ListTypVar ',' TYPE IDENT '[' ']'  */
-#line 146 "src/tpc.y"
+#line 148 "src/tpc.y"
                                          {
         Node* param = makeNode(Parameter);
 
@@ -1382,7 +1382,7 @@ yyreduce:
     break;
 
   case 17: /* ListTypVar: ListTypVar ',' TYPE IDENT  */
-#line 164 "src/tpc.y"
+#line 166 "src/tpc.y"
                                 {
         Node* param = makeNode(Parameter);
 
@@ -1404,7 +1404,7 @@ yyreduce:
     break;
 
   case 18: /* ListTypVar: TYPE IDENT '[' ']'  */
-#line 181 "src/tpc.y"
+#line 183 "src/tpc.y"
                           {
         Node* param = makeNode(Parameter);
         Node* type_var = makeNode(type);
@@ -1423,7 +1423,7 @@ yyreduce:
     break;
 
   case 19: /* ListTypVar: TYPE IDENT  */
-#line 195 "src/tpc.y"
+#line 197 "src/tpc.y"
                   {
         Node* param = makeNode(Parameter);
         Node* type_var = makeNode(type);
@@ -1441,7 +1441,7 @@ yyreduce:
     break;
 
   case 20: /* Corps: '{' DeclVars SuiteInstr '}'  */
-#line 209 "src/tpc.y"
+#line 211 "src/tpc.y"
                                    {
         (yyval.node) = makeNode(corps);
         Node* var_foncts = makeNode(variables);
@@ -1457,7 +1457,7 @@ yyreduce:
     break;
 
   case 21: /* SuiteInstr: SuiteInstr Instr  */
-#line 222 "src/tpc.y"
+#line 224 "src/tpc.y"
                      {
         if ((yyval.node) == NULL) {
             (yyval.node) = (yyvsp[0].node);
@@ -1469,13 +1469,13 @@ yyreduce:
     break;
 
   case 22: /* SuiteInstr: %empty  */
-#line 230 "src/tpc.y"
+#line 232 "src/tpc.y"
       { (yyval.node) = NULL; }
 #line 1475 "src/tpc.tab.c"
     break;
 
   case 23: /* Instr: LValue '=' Exp ';'  */
-#line 233 "src/tpc.y"
+#line 235 "src/tpc.y"
                           {
         (yyval.node) = makeNode(affectation);
         (yyval.node)->byte = '=';
@@ -1487,7 +1487,7 @@ yyreduce:
     break;
 
   case 24: /* Instr: IF '(' Exp ')' Instr  */
-#line 240 "src/tpc.y"
+#line 242 "src/tpc.y"
                             {
         (yyval.node) = makeNode(condition_if);
         addChild((yyval.node), (yyvsp[-2].node));
@@ -1497,7 +1497,7 @@ yyreduce:
     break;
 
   case 25: /* Instr: IF '(' Exp ')' Instr ELSE Instr  */
-#line 245 "src/tpc.y"
+#line 247 "src/tpc.y"
                                        {
         (yyval.node) = makeNode(ifElseCondition);
 
@@ -1518,7 +1518,7 @@ yyreduce:
     break;
 
   case 26: /* Instr: WHILE '(' Exp ')' Instr  */
-#line 261 "src/tpc.y"
+#line 263 "src/tpc.y"
                                {
         (yyval.node) = makeNode(while_loop);
 
@@ -1533,7 +1533,7 @@ yyreduce:
     break;
 
   case 27: /* Instr: IDENT '(' Arguments ')' ';'  */
-#line 271 "src/tpc.y"
+#line 273 "src/tpc.y"
                                     {
         
         (yyval.node) = makeNode(fonctionCall);
@@ -1551,7 +1551,7 @@ yyreduce:
     break;
 
   case 28: /* Instr: IDENT '[' IDENT ']'  */
-#line 284 "src/tpc.y"
+#line 286 "src/tpc.y"
                           {
         (yyval.node) = makeNode(arrayIndexing);
         (yyval.node)->isArray = 1;
@@ -1567,7 +1567,7 @@ yyreduce:
     break;
 
   case 29: /* Instr: IDENT '[' Exp ']'  */
-#line 295 "src/tpc.y"
+#line 297 "src/tpc.y"
                         {
         (yyval.node) = makeNode(arrayIndexing);
         (yyval.node)->isArray = 1;
@@ -1582,7 +1582,7 @@ yyreduce:
     break;
 
   case 30: /* Instr: RETURN Exp ';'  */
-#line 305 "src/tpc.y"
+#line 307 "src/tpc.y"
                       {
         (yyval.node) = makeNode(Return);
         addChild((yyval.node), (yyvsp[-1].node));
@@ -1591,13 +1591,13 @@ yyreduce:
     break;
 
   case 31: /* Instr: RETURN ';'  */
-#line 309 "src/tpc.y"
+#line 311 "src/tpc.y"
                   { (yyval.node) = makeNode(Return);}
 #line 1597 "src/tpc.tab.c"
     break;
 
   case 32: /* Instr: '{' SuiteInstr '}'  */
-#line 310 "src/tpc.y"
+#line 312 "src/tpc.y"
                           {
         (yyval.node) = makeNode(instructions);
         addChild((yyval.node), (yyvsp[-1].node));
@@ -1606,13 +1606,13 @@ yyreduce:
     break;
 
   case 33: /* Instr: ';'  */
-#line 314 "src/tpc.y"
+#line 316 "src/tpc.y"
            { (yyval.node) = NULL; }
 #line 1612 "src/tpc.tab.c"
     break;
 
   case 34: /* Exp: Exp OR TB  */
-#line 316 "src/tpc.y"
+#line 318 "src/tpc.y"
                  { 
         (yyval.node) = makeNode(or_op);
         addChild((yyval.node), (yyvsp[-2].node));
@@ -1622,13 +1622,13 @@ yyreduce:
     break;
 
   case 35: /* Exp: TB  */
-#line 321 "src/tpc.y"
+#line 323 "src/tpc.y"
           { (yyval.node) = (yyvsp[0].node); }
 #line 1628 "src/tpc.tab.c"
     break;
 
   case 36: /* TB: TB AND FB  */
-#line 323 "src/tpc.y"
+#line 325 "src/tpc.y"
                 {
         (yyval.node) = makeNode(and_op);
         addChild((yyval.node), (yyvsp[-2].node));
@@ -1638,13 +1638,13 @@ yyreduce:
     break;
 
   case 37: /* TB: FB  */
-#line 328 "src/tpc.y"
+#line 330 "src/tpc.y"
           { (yyval.node) = (yyvsp[0].node); }
 #line 1644 "src/tpc.tab.c"
     break;
 
   case 38: /* FB: FB EQ M  */
-#line 330 "src/tpc.y"
+#line 332 "src/tpc.y"
                {
         (yyval.node) = makeNode(eq);
         strcpy((yyval.node)->comp, (yyvsp[-1].comp));
@@ -1655,13 +1655,13 @@ yyreduce:
     break;
 
   case 39: /* FB: M  */
-#line 336 "src/tpc.y"
+#line 338 "src/tpc.y"
          { (yyval.node) = (yyvsp[0].node); }
 #line 1661 "src/tpc.tab.c"
     break;
 
   case 40: /* M: M ORDER E  */
-#line 338 "src/tpc.y"
+#line 340 "src/tpc.y"
                  {
         (yyval.node) = makeNode(order);
         strcpy((yyval.node)->comp, (yyvsp[-1].comp));
@@ -1672,13 +1672,13 @@ yyreduce:
     break;
 
   case 41: /* M: E  */
-#line 344 "src/tpc.y"
+#line 346 "src/tpc.y"
          { (yyval.node) = (yyvsp[0].node); }
 #line 1678 "src/tpc.tab.c"
     break;
 
   case 42: /* E: E ADDSUB T  */
-#line 346 "src/tpc.y"
+#line 348 "src/tpc.y"
                   {
         (yyval.node) = makeNode(addsub_op);
         (yyval.node)->byte = (yyvsp[-1].byte);
@@ -1689,13 +1689,13 @@ yyreduce:
     break;
 
   case 43: /* E: T  */
-#line 352 "src/tpc.y"
+#line 354 "src/tpc.y"
          { (yyval.node) = (yyvsp[0].node); }
 #line 1695 "src/tpc.tab.c"
     break;
 
   case 44: /* T: T DIVSTAR F  */
-#line 354 "src/tpc.y"
+#line 356 "src/tpc.y"
                    {
         (yyval.node) = makeNode(divstar_op);
         (yyval.node)->byte = (yyvsp[-1].byte);
@@ -1706,13 +1706,13 @@ yyreduce:
     break;
 
   case 45: /* T: F  */
-#line 360 "src/tpc.y"
+#line 362 "src/tpc.y"
          { (yyval.node) = (yyvsp[0].node); }
 #line 1712 "src/tpc.tab.c"
     break;
 
   case 46: /* F: ADDSUB F  */
-#line 362 "src/tpc.y"
+#line 364 "src/tpc.y"
                 {
         (yyval.node) = makeNode(unary_sign);
         (yyval.node)->byte = (yyvsp[-1].byte);
@@ -1722,7 +1722,7 @@ yyreduce:
     break;
 
   case 47: /* F: '!' F  */
-#line 367 "src/tpc.y"
+#line 369 "src/tpc.y"
              {
         (yyval.node) = makeNode(NOT_OPERATOR);
         (yyval.node)->byte = '!';
@@ -1732,13 +1732,13 @@ yyreduce:
     break;
 
   case 48: /* F: '(' Exp ')'  */
-#line 372 "src/tpc.y"
+#line 374 "src/tpc.y"
                    { (yyval.node) = (yyvsp[-1].node); }
 #line 1738 "src/tpc.tab.c"
     break;
 
   case 49: /* F: NUM  */
-#line 373 "src/tpc.y"
+#line 375 "src/tpc.y"
            {
         (yyval.node) = makeNode(num);
         (yyval.node)->num = (yyvsp[0].num);
@@ -1747,7 +1747,7 @@ yyreduce:
     break;
 
   case 50: /* F: CHARACTER  */
-#line 377 "src/tpc.y"
+#line 379 "src/tpc.y"
                  {
         (yyval.node) = makeNode(character);
         (yyval.node)->byte = (yyvsp[0].byte);
@@ -1756,13 +1756,13 @@ yyreduce:
     break;
 
   case 51: /* F: LValue  */
-#line 381 "src/tpc.y"
+#line 383 "src/tpc.y"
               { (yyval.node) = (yyvsp[0].node); }
 #line 1762 "src/tpc.tab.c"
     break;
 
   case 52: /* F: IDENT '(' Arguments ')'  */
-#line 382 "src/tpc.y"
+#line 384 "src/tpc.y"
                                 {
         (yyval.node) = makeNode(fonctionCall);
 
@@ -1779,7 +1779,7 @@ yyreduce:
     break;
 
   case 53: /* LValue: IDENT  */
-#line 396 "src/tpc.y"
+#line 398 "src/tpc.y"
              {
         (yyval.node) = makeNode(NameVar);
         strcpy((yyval.node)->ident, (yyvsp[0].ident));
@@ -1788,7 +1788,7 @@ yyreduce:
     break;
 
   case 54: /* LValue: IDENT '[' IDENT ']'  */
-#line 400 "src/tpc.y"
+#line 402 "src/tpc.y"
                            {
         (yyval.node) = makeNode(NameVar);
         strcpy((yyval.node)->ident, (yyvsp[-3].ident));
@@ -1803,7 +1803,7 @@ yyreduce:
     break;
 
   case 55: /* LValue: IDENT '[' Exp ']'  */
-#line 410 "src/tpc.y"
+#line 412 "src/tpc.y"
                          {
         (yyval.node) = makeNode(NameVar);
         (yyval.node)->isArray = 1;
@@ -1814,7 +1814,7 @@ yyreduce:
     break;
 
   case 56: /* LValue: IDENT '[' NUM ']'  */
-#line 416 "src/tpc.y"
+#line 418 "src/tpc.y"
                          {
         (yyval.node) = makeNode(NameVar);
         strcpy((yyval.node)->ident, (yyvsp[-3].ident));
@@ -1830,19 +1830,19 @@ yyreduce:
     break;
 
   case 57: /* Arguments: ListExp  */
-#line 429 "src/tpc.y"
+#line 431 "src/tpc.y"
                { (yyval.node) = (yyvsp[0].node); }
 #line 1836 "src/tpc.tab.c"
     break;
 
   case 58: /* Arguments: %empty  */
-#line 430 "src/tpc.y"
+#line 432 "src/tpc.y"
       { (yyval.node) = NULL; }
 #line 1842 "src/tpc.tab.c"
     break;
 
   case 59: /* ListExp: ListExp ',' Exp  */
-#line 433 "src/tpc.y"
+#line 435 "src/tpc.y"
                        {
             (yyval.node) = (yyvsp[-2].node);    
             addSibling((yyval.node), (yyvsp[0].node));
@@ -1851,7 +1851,7 @@ yyreduce:
     break;
 
   case 60: /* ListExp: Exp  */
-#line 437 "src/tpc.y"
+#line 439 "src/tpc.y"
            { (yyval.node) = (yyvsp[0].node); }
 #line 1857 "src/tpc.tab.c"
     break;
@@ -2050,9 +2050,7 @@ yyreturnlab:
   return yyresult;
 }
 
-#line 441 "src/tpc.y"
-
-int displayTree = 0;
+#line 443 "src/tpc.y"
 
 
 void yyerror(const char *msg){

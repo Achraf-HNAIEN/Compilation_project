@@ -4,14 +4,16 @@
 #include <stdlib.h>
 
 extern int lineno, colno;
-extern void yyerror(const char *msg);
-extern int yyparse(void);
+
 extern int yylex();
 void yyerror(const char *msg); 
 #include "tree.h"
 
 Node *tree;
+#include "main.c"
 %}
+
+
 
 %union {
     Node *node;
@@ -421,9 +423,7 @@ LValue:
 
         Node* index_array = makeNode(Index);
         index_array->num = $3;
-int main(int argc, char* argv[]) {
-  // Copiez le reste du code de la fonction main ici
-}
+
         addChild($$, index_array);
     }
     ;
