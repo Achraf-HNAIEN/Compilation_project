@@ -1,5 +1,0 @@
-int main() {
-    int if ;
-    if = 5;
-    return if;
-}

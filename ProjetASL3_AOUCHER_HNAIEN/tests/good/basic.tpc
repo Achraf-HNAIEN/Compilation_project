@@ -1,8 +1,0 @@
-int main() {
-    int a, b;
-    char c;
-    a = 10;
-    b = a + 5;
-    c = 'x';
-    return 0;
-}
